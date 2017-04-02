@@ -3,12 +3,13 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 var db;
-if(process.env.ENV == 'Test')
-	db = mongoose.connect('mongodb://localhost/bookAPI_test');
-else
-	db = mongoose.connect('mongodb://localhost/bookAPI');
+if (process.env.ENV == 'Test') {
+	db = mongoose.connect('mongodb://localhost/trading_test');
+} else {
+	db = mongoose.connect('mongodb://localhost/trading');
+}
 
-var Book = require('./src/models/bookModel');
+var Trade = require('./src/models/tradeModel');
 
 var app = express();
 
@@ -19,11 +20,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-bookRouter = require('./src/Routes/bookRoutes')(Book);
-// authorRouter = require('./Routes/authorRoutes')();
+tradeRouter = require('./src/Routes/tradeRoutes')(Trade);
 
-app.use('/api/books', bookRouter);
-//app.use('/api/authors', authorRouter);
+app.use('/api/trades', tradeRouter);
 
 app.get('/', function(req, res) {
   res.send('Welcome to my API!');
