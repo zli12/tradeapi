@@ -1,16 +1,16 @@
 var should = require('should');
 var sinon = require('sinon');
 
-describe('Book Controller Tests: ', function() {
+describe('Trade Controller Tests: ', function() {
   describe('Post', function() {
-    it('should not allow an empty title on post', function() {
-      var Book = function(book) {
+    it('should not allow an empty symbol on post', function() {
+      var Trade = function(trade) {
         this.save = function(){};
       };
 
       var req = {
         body: {
-          author: 'zli'
+          action: 'BUY'
         }
       };
 
@@ -19,11 +19,11 @@ describe('Book Controller Tests: ', function() {
         send: sinon.spy()
       };
 
-      var bookController = require('../../src/controllers/bookController')(Book);
-      bookController.post(req, res);
+      var tradeController = require('../../src/controllers/tradeController')(Trade);
+      tradeController.post(req, res);
 
       res.status.calledWith(400).should.equal(true, 'Bad status ' + res.status.args[0][0]);
-      res.send.calledWith('Title is required').should.equal(true);
+      res.send.calledWith('Symbol is required').should.equal(true);
     });
   });
 });

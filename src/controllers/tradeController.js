@@ -4,7 +4,7 @@ var tradeController = function(Trade) {
 
     if(!trade.symbol) {
       res.status(400);
-      res.send('Trade symbol is required');
+      res.send('Symbol is required');
     }
     else {
       trade.save();
