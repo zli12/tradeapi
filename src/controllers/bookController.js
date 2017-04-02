@@ -6,7 +6,7 @@ var bookController = function(Book) {
       res.status(400);
       res.send('Title is required');
     }
-    else {      
+    else {
       book.save();
       res.status(201);
       res.send(book);
@@ -24,7 +24,14 @@ var bookController = function(Book) {
       if (err) {
         res.status(500).send(err);
       } else {
-        res.json(books);
+        var returnedBooks = [];
+        books.forEach(function(element, index, array){
+          var newBook = element.toJSON();
+          newBook.links = {};
+          newBook.links.self = 'http://' + req.headers.host + '/api/books/' + newBook._id;
+          returnedBooks.push(newBook);
+        });
+        res.json(returnedBooks);
       }
     });
   };
